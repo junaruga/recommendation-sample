@@ -21,8 +21,12 @@ This source is the sample of recommendation proguram, such as Amazon's "Customer
 
     Above case means that when one user (user_id: 2) by one item (item_id: 3), the system recommends items of item_id: 8, 1, 2 by this order, for this user.
 
-    1st argument means user_id (1 <= n <= 5)
-    2nd argument means item_id (1 <= n <= 10)
+### Command Argument
+
+| Argument | Decription |
+|--------------| -----------------------|
+| 1st | user_id (1 <= n <= 5)  |
+| 2nd | item_id (1 <= n <= 10) |
 
 ## Directory structure
 
