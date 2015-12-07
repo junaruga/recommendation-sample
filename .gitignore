@@ -1,0 +1,11 @@
+# Mac
+.DS_Store
+._*
+# vi
+*.swp
+# Emacs
+*~
+# Hidemaru
+*.BAK
+# Rbenv
+.ruby-version

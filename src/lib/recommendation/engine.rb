@@ -1,6 +1,3 @@
-#!/usr/bin/env ruby
-# coding: utf-8
-
 module Recommendation
   class Engine
     LATEST_ITEM_NUMBER = 3
@@ -38,9 +35,12 @@ module Recommendation
 
     # user - user recommendation
     def recommend_user_id_by_user_ids(user_ids)
+      if user_ids.nil?
+        raise ArgumentError.new("user_ids is required.")
+      end
+
       records = Recommendation::Record.new('users')
-      target_user = records.findOne(@user_id)
-      scores = {}
+      target_user = records.find_one(@user_id)
 
       recommended_user_id = 0
       max_score = 0
@@ -48,7 +48,7 @@ module Recommendation
         if @user_id == user_id
           next
         end
-        user = records.findOne(user_id)
+        user = records.find_one(user_id)
         score = get_correlated_score_by_user(target_user, user)
         if score > max_score
           max_score = score
@@ -58,12 +58,19 @@ module Recommendation
 
       if recommended_user_id == 0
         raise RuntimeError,
-          "user data is not enough to recommend." 
+          "user data is not enough to recommend."
       end
       recommended_user_id
     end
 
     def get_correlated_score_by_user(target_user, user)
+      if target_user.nil?
+        raise ArgumentError.new("target_user is required.")
+      end
+      if user.nil?
+        raise ArgumentError.new("user is required.")
+      end
+
       score = 0
       if target_user.key?('sex') and user.key?('sex')
         if target_user['sex'] == user['sex']
@@ -79,6 +86,10 @@ module Recommendation
     end
 
     def recommend_item_ids_of_user_id(other_user_id)
+      if other_user_id.nil?
+        raise ArgumentError.new("other_user_id is required.")
+      end
+
       payments = Recommendation::Record.new('payments')
 
       recommended_item_ids = []

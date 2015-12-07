@@ -1,6 +1,3 @@
-#!/usr/bin/env ruby
-# coding: utf-8
-
 require 'json'
 
 module Recommendation
@@ -14,21 +11,25 @@ module Recommendation
 
     def each(&block)
       path = json_file_path;
-      open(path) { |file|
+      open(path) do |file|
          while line = file.gets
-           if line == ""
+           if line.empty?
              next
            end
            row = JSON.parse(line)
            block.call(row)
          end
-      }
+      end
     end
 
-    def findOne(primary_id)
+    def find_one(primary_id)
+      if primary_id.nil?
+        raise ArgumentError.new("primary_id is required.")
+      end
+
       result = {}
       each do |row|
-        if row.key?('id') and row['id'] == primary_id
+        if row['id'] == primary_id
           result = row
           break
         end
@@ -39,7 +40,8 @@ module Recommendation
     private
 
     def json_file_path
-      "#{DATA_DIR}/#{@table_name}.json"
+      file_name = "%s.json" % @table_name
+      File.join(DATA_DIR, file_name)
     end
   end
 end

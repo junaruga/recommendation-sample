@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# coding: utf-8
 
 $:.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
 require 'recommendation'
@@ -25,9 +24,8 @@ The users who purchased the items which you purchased are
 the below items.
 EOS
 
-recommended_item_ids.each do |item_id|
-  puts("  item_id: #{item_id}")
+recommended_item_ids.each do |recommended_item_id|
+  puts("  item_id: %d" % recommended_item_id)
 end
 
 exit(0)
-
