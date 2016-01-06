@@ -1,6 +1,6 @@
 require 'json'
 
-module Recommendation
+module RecommendationSample
   class Record
 
     DATA_DIR = '../../data'

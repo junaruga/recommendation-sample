@@ -1,4 +1,4 @@
-module Recommendation
+module RecommendationSample
   class Engine
     LATEST_ITEM_NUMBER = 3
     SCORE_USER_SEX = 5
@@ -19,7 +19,7 @@ module Recommendation
 
     def users_from_payments
       target_users = []
-      payments = Recommendation::Record.new('payments')
+      payments = RecommendationSample::Record.new('payments')
       payments.each do |row|
         if row.key?('item_ids')
           row['item_ids'].each do |item_id|
@@ -39,7 +39,7 @@ module Recommendation
         raise ArgumentError.new("user_ids is required.")
       end
 
-      records = Recommendation::Record.new('users')
+      records = RecommendationSample::Record.new('users')
       target_user = records.find_one(@user_id)
 
       recommended_user_id = 0
@@ -90,7 +90,7 @@ module Recommendation
         raise ArgumentError.new("other_user_id is required.")
       end
 
-      payments = Recommendation::Record.new('payments')
+      payments = RecommendationSample::Record.new('payments')
 
       recommended_item_ids = []
       item_ids = []

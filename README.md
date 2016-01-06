@@ -17,7 +17,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install specific_install
-    $ gem install recommendation_sample
     $ gem specific_install -l git://github.com/junaruga/recommendation_sample.git
 
 ## Usage
