@@ -3,7 +3,8 @@ require 'json'
 module RecommendationSample
   class Record
 
-    DATA_DIR = '../../data'
+    DATA_DIR = File.expand_path(
+      File.join(File.dirname(__FILE__), '..', '..', 'data'))
 
     def initialize(table_name)
       @table_name = table_name
