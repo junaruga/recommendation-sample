@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
-require 'recommendation'
+$:.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
+require 'recommendation_sample'
 
 if ARGV.size < 2 then
   puts("error: invalid arguments count")
@@ -16,7 +16,7 @@ if user_id == 0 or item_id == 0
   exit(1)
 end
 
-engine = Recommendation::Engine.new(user_id, item_id)
+engine = RecommendationSample::Engine.new(user_id, item_id)
 recommended_item_ids = engine.recommend_item_id
 
 puts <<-'EOS'
