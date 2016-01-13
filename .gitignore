@@ -9,3 +9,4 @@
 *.BAK
 # Rbenv
 .ruby-version
+Gemfile.lock
