@@ -118,7 +118,7 @@ module RecommendationSample
 
       if recommended_item_ids.size == 0
         raise RuntimeError,
-          "recommended user's item is not registered at data." 
+          "recommended user's item is not registered at data."
       end
 
       recommended_item_ids

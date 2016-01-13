@@ -10,6 +10,10 @@ module RecommendationSample
       @table_name = table_name
     end
 
+    def table_name
+      @table_name
+    end
+
     def each(&block)
       path = json_file_path;
       open(path) do |file|
