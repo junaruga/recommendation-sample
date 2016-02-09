@@ -1,0 +1,10 @@
+AllCops:
+  Include:
+    - 'lib/**/*'
+  Exclude:
+    - 'bin/console'
+    - 'bin/setup'
+    - 'spec/**/*'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

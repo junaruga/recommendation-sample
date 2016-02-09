@@ -21,12 +21,13 @@ module RecommendationSample
       target_users = []
       payments = RecommendationSample::Record.new('payments')
       payments.each do |row|
-        if row.key?('item_ids')
-          row['item_ids'].each do |item_id|
-            if item_id == @item_id
-              target_users.push(row['user_id'])
-              break
-            end
+        unless row.key?('item_ids')
+          next
+        end
+        row['item_ids'].each do |item_id|
+          if item_id == @item_id
+            target_users.push(row['user_id'])
+            break
           end
         end
       end
@@ -91,10 +92,8 @@ module RecommendationSample
       end
 
       payments = RecommendationSample::Record.new('payments')
-
       recommended_item_ids = []
       item_ids = []
-
       payments.each do |row|
         if row.key?('user_id') and row['user_id'] == other_user_id
           if row.key?('item_ids')
@@ -103,7 +102,7 @@ module RecommendationSample
         end
       end
 
-      # TODO item-item recommend
+      # TODO: item-item recommend
 
       # get latest LATEST_ITEM_NUMBER items of this user
       item_ids = item_ids.reverse
@@ -117,8 +116,7 @@ module RecommendationSample
       end
 
       if recommended_item_ids.size == 0
-        raise RuntimeError,
-          "recommended user's item is not registered at data."
+        raise RuntimeError, "recommended user's item is not registered."
       end
 
       recommended_item_ids
