@@ -7,6 +7,6 @@ task :default => :spec
 
 desc 'Validate by robocop'
 task :rubocop do
-  sh 'rubocop -D'
+  sh 'rubocop -DS'
 end
 

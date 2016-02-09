@@ -1,36 +1,31 @@
 require 'json'
 
 module RecommendationSample
+  # This program manages json files under the DATA_DIR as object.
+  # Inspired by Rails ActiveRecord.
   class Record
-
     DATA_DIR = File.expand_path(
       File.join(File.dirname(__FILE__), '..', '..', 'data'))
+
+    attr_accessor :table_name
 
     def initialize(table_name)
       @table_name = table_name
     end
 
-    def table_name
-      @table_name
-    end
-
-    def each(&block)
-      path = json_file_path;
+    def each
+      path = json_file_path
       open(path) do |file|
-         while line = file.gets
-           if line.empty?
-             next
-           end
-           row = JSON.parse(line)
-           block.call(row)
-         end
+        while (line = file.gets)
+          next if line.empty?
+          row = JSON.parse(line)
+          yield(row)
+        end
       end
     end
 
     def find_one(primary_id)
-      if primary_id.nil?
-        raise ArgumentError.new("primary_id is required.")
-      end
+      fail ArgumentError 'primary_id is required.' if primary_id.nil?
 
       result = {}
       each do |row|
@@ -45,7 +40,7 @@ module RecommendationSample
     private
 
     def json_file_path
-      file_name = "%s.json" % @table_name
+      file_name = format('%s.json', @table_name)
       File.join(DATA_DIR, file_name)
     end
   end

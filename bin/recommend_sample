@@ -1,18 +1,19 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
+$LOAD_PATH.unshift(
+  File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
 require 'recommendation_sample'
 
-if ARGV.size < 2 then
-  puts("error: invalid arguments count")
+if ARGV.size < 2
+  puts('error: invalid arguments count')
   exit(1)
 end
 
 user_id = ARGV[0].to_i
 item_id = ARGV[1].to_i
 
-if user_id == 0 or item_id == 0
-  puts("error: invalid arguments number")
+if user_id == 0 || item_id == 0
+  puts('error: invalid arguments number')
   exit(1)
 end
 
@@ -25,7 +26,7 @@ the below items.
 EOS
 
 recommended_item_ids.each do |recommended_item_id|
-  puts("  item_id: %d" % recommended_item_id)
+  puts(format('  item_id: %d', recommended_item_id))
 end
 
 exit(0)
