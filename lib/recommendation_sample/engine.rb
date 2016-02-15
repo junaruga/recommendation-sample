@@ -5,36 +5,34 @@ module RecommendationSample
     SCORE_USER_SEX = 5
 
     def initialize(user_id, item_id)
+      fail ArgumentError 'user_id is required.' if user_id.nil?
+      fail ArgumentError 'item_id is required.' if item_id.nil?
+
       @user_id = user_id
       @item_id = item_id
     end
 
     def recommend_item_id
-      users = users_from_payments
-      other_user_id = recommend_user_id_by_user_ids(users)
+      users = users_buying_the_item
+      other_user_id = user_related_on_myself_from_users(users)
       item_ids = recommend_item_ids_of_user_id(other_user_id)
       item_ids
     end
 
     private
 
-    def users_from_payments
-      target_users = []
+    def users_buying_the_item
       payments = RecommendationSample::Record.new('payments')
-      payments.each do |row|
-        next unless row.key?('item_ids')
-        row['item_ids'].each do |item_id|
-          if item_id == @item_id
-            target_users.push(row['user_id'])
-            break
-          end
-        end
+      target_users = []
+      payments.each do |payment|
+        next unless payment['item_ids'].include?(@item_id)
+        target_users.push(payment['user_id'])
       end
       target_users.sort.uniq
     end
 
     # user - user recommendation
-    def recommend_user_id_by_user_ids(user_ids)
+    def user_related_on_myself_from_users(user_ids)
       fail ArgumentError 'user_ids is required.' if user_ids.nil?
 
       records = RecommendationSample::Record.new('users')
@@ -42,10 +40,12 @@ module RecommendationSample
 
       recommended_user_id = 0
       max_score = 0
+
       user_ids.each do |user_id|
         next if @user_id == user_id
+
         user = records.find_one(user_id)
-        score = get_correlated_score_by_user(target_user, user)
+        score = get_score_from_users(target_user, user)
         if score > max_score
           max_score = score
           recommended_user_id = user_id
@@ -56,7 +56,7 @@ module RecommendationSample
       recommended_user_id
     end
 
-    def get_correlated_score_by_user(target_user, user)
+    def get_score_from_users(target_user, user)
       fail ArgumentError 'target_user is required.' if target_user.nil?
       fail ArgumentError 'user is required.' if user.nil?
 
