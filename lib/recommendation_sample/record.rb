@@ -37,6 +37,11 @@ module RecommendationSample
       result
     end
 
+    def self.find_one(table_name, primary_id)
+      records = RecommendationSample::Record.new(table_name)
+      records.find_one(primary_id)
+    end
+
     private
 
     def json_file_path
