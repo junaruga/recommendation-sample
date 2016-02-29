@@ -14,6 +14,11 @@ And then execute:
 
     $ bundle
 
+    $ bundle exec gem list
+    ...
+    recommendation_sample (0.1.0)
+    ...
+
 Or install it yourself as:
 
     $ gem install specific_install
@@ -23,9 +28,9 @@ Or install it yourself as:
 
 This source is the sample of recommendation proguram, such as Amazon's "Customers Who Bought This Item Also Bought".
 
-Run target command.
+Run command, if you install it by Bundler.
 
-    $ recommend_sample 2 3
+    $ `bundle show recommendation_sample`/bin/recommend_sample 2 3
     The users who purchased the items which you purchased are
     the below items.
       item_id: 8
